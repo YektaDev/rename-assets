@@ -21,7 +21,7 @@ import { isBinary } from "istextorbinary";
 
 // --- Configuration ---
 const DIST_DIR = "dist";
-const ASSETS_SUBDIR = "x"; // The subdirectory within DIST_DIR containing assets to rename
+const ASSETS_SUBDIR = "_astro"; // The subdirectory within DIST_DIR containing assets to rename
 const RENAME_EXT_WHITELIST = [".js", ".css", ".woff2", ".woff"];
 // --- End Configuration ---
 
