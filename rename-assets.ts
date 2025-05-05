@@ -21,7 +21,7 @@ import { isBinary } from "istextorbinary";
 
 // --- Configuration ---
 const DIST_DIR = "dist";
-const ASSETS_SUBDIR = "_astro"; // The subdirectory within DIST_DIR containing assets to rename
+const ASSETS_SUBDIR = "x"; // The subdirectory within DIST_DIR containing assets to rename
 const RENAME_EXT_WHITELIST = [".js", ".css", ".woff2", ".woff"];
 // --- End Configuration ---
 
@@ -64,15 +64,12 @@ async function findFilesRecursively(dirPath: string, allFiles: string[] = []): P
   return allFiles;
 }
 
-let iteration = 1;
-
 /**
  * Main script logic.
  */
 async function run(): Promise<void> {
   // console.log("Starting asset renaming process...");
 
-  console.log(`Iteration #${iteration}`);
   const { create64 } = await xxhashWasmFactory();
 
   const filenameMapping: FileNameMapping = new Map();
@@ -207,17 +204,11 @@ async function run(): Promise<void> {
     throw new Error("Failed during reference update phase.");
   }
 
-  if (updatedFileCount === 0) {
-    console.log(`Asset renaming and reference update process finished successfully in ${iteration} iterations.`);
-  } else {
-    // The script works without any iterations.
-    // This is just an obsessive behavior over having the "final" state.
-    // Feel free to drop iterations.
-    if (iteration++ > 9) {
-      throw new Error("Too many iterations. There is most likely a cyclic reference.");
-    }
-    return await run();
-  }
+  console.log(`Asset renaming and reference update process finished successfully.`);
+
+  // The script used to have iterations, which was just an obsessive behavior over having the
+  // "final" state. However, apart from unnecessary operations, it also increased the chances of
+  // false-positive token replacements. Hence, no iterations.
 }
 
 // --- Script Execution ---
